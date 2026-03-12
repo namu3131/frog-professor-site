@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://frog-professor-site.vercel.app/sitemap.xml
+Sitemap: https://minsl.com/sitemap.xml
