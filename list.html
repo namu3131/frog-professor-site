@@ -234,19 +234,38 @@
   <script>
     const SHEET_ID = "1OE8jCRvXbSOc80DXDCvVK85fbtyL3VQJ4o1JxbqIIno";
     const GID = "1054349307";
-    const API_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+
+    function parseCSV(text) {
+      const lines = text.trim().split("\n");
+      return lines.slice(1).map(line => {
+        const cols = [];
+        let current = "";
+        let inQuote = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (ch === '"') {
+            inQuote = !inQuote;
+          } else if (ch === "," && !inQuote) {
+            cols.push(current.trim());
+            current = "";
+          } else {
+            current += ch;
+          }
+        }
+        cols.push(current.trim());
+        return cols;
+      });
+    }
 
     async function loadData() {
       const container = document.getElementById("cardContainer");
       const countBadge = document.getElementById("countBadge");
 
       try {
-        const res = await fetch(API_URL);
+        const res = await fetch(CSV_URL);
         const text = await res.text();
-
-        // Google Sheets JSON 파싱
-        const json = JSON.parse(text.substring(47).slice(0, -2));
-        const rows = json.table.rows;
+        const rows = parseCSV(text).filter(r => r[0] && r[1]);
 
         if (!rows || rows.length === 0) {
           container.innerHTML = "<div class='error'>데이터가 없습니다.</div>";
@@ -254,17 +273,15 @@
         }
 
         // 전체 데이터에서 랜덤 20개 선택
-        const shuffled = rows.sort(() => Math.random() - 0.5).slice(0, 20);
-
+        const shuffled = [...rows].sort(() => Math.random() - 0.5).slice(0, 20);
         countBadge.textContent = `총 ${rows.length}개 중 20개 표시`;
 
-        container.innerHTML = `<div class="cards-grid">${shuffled.map(row => {
-          const c = row.c;
-          const num = c[0]?.v || "";
-          const office = c[1]?.v || "";
-          const member = c[2]?.v || "";
-          const phone = c[3]?.v || "";
-          const address = c[4]?.v || "";
+        container.innerHTML = `<div class="cards-grid">${shuffled.map(cols => {
+          const num = cols[0] || "";
+          const office = cols[1] || "";
+          const member = cols[2] || "";
+          const phone = cols[3] || "";
+          const address = cols[4] || "";
 
           return `
             <div class="card">
