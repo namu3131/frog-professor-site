@@ -362,6 +362,49 @@ document.getElementById("lectureForm").addEventListener("submit", async function
 });
 </script>
           <p class="subhead">교육학 박사 · 대학 교수 · 전문 강연자</p>
+          <form id="lectureForm" style="margin-top:28px;">
+  <div style="display:grid; gap:12px;">
+    <input
+      type="text"
+      name="name"
+      placeholder="이름"
+      required
+      style="padding:14px 16px; border:1px solid #e7e5e4; border-radius:14px; font-size:16px;"
+    />
+
+    <input
+      type="email"
+      name="email"
+      placeholder="이메일"
+      required
+      style="padding:14px 16px; border:1px solid #e7e5e4; border-radius:14px; font-size:16px;"
+    />
+
+    <input
+      type="text"
+      name="organization"
+      placeholder="기관 / 회사명"
+      style="padding:14px 16px; border:1px solid #e7e5e4; border-radius:14px; font-size:16px;"
+    />
+
+    <textarea
+      name="message"
+      placeholder="문의 내용을 입력해 주세요."
+      rows="6"
+      style="padding:14px 16px; border:1px solid #e7e5e4; border-radius:14px; font-size:16px; resize:vertical;"
+    ></textarea>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="width:fit-content;"
+    >
+      문의 보내기
+    </button>
+  </div>
+</form>
+
+<p id="formResult" style="margin-top:14px; color:#444;"></p>
           <p class="lead">
             배움이 실제 변화로 이어지도록, 이론과 현장을 연결하는 강의와 연구를 진행합니다.
             대학, 기관, 기업에서 이해하기 쉽고 바로 적용할 수 있는 교육 콘텐츠를 제공합니다.
