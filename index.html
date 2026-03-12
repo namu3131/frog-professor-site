@@ -659,8 +659,11 @@
     .then(res => res.json())
     .then(data => {
       const list = document.getElementById("publicationList");
-      if (!data || data.length === 0) {
-        list.innerHTML = data.map(pub => `
+     if (!data || data.length === 0) {
+        list.innerHTML = "<p style='color:#aaa; text-align:center;'>등록된 출판물이 없습니다.</p>";
+        return;
+      }
+      list.innerHTML = data.map(pub => `
   <div style="border:1px solid #e0e0e0; border-radius:12px; padding:24px; margin-bottom:20px; display:flex; gap:20px; align-items:flex-start;">
     ${pub.image ? `<img src="${pub.image}" alt="${pub.title}" style="width:100px; height:140px; object-fit:cover; border-radius:8px; flex-shrink:0;">` : `<div style="width:100px; height:140px; background:#f0f0f0; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#ccc; font-size:0.8rem;">No Image</div>`}
     <div>
