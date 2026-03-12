@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사무소 리스트 | 김개구리 교수</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #666;
+      --line: #e7e5e4;
+      --accent: #111827;
+      --shadow: 0 10px 30px rgba(0,0,0,.06);
+      --radius: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      background: white;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .back-btn:hover { background: var(--bg); }
+
+    .page-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .main { padding: 40px 0 80px; }
+
+    .section-header {
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #7a7a7a;
+      font-weight: 700;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin: 8px 0 0;
+    }
+
+    .count-badge {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 12px;
+      background: var(--accent);
+      color: white;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.1);
+    }
+
+    .card-number {
+      font-size: 12px;
+      color: #aaa;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .card-name {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .card-member {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .card-divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 16px 0;
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .card-info-icon {
+      font-size: 15px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .card-info-text {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 80px 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .error {
+      text-align: center;
+      padding: 80px 0;
+      color: #e53e3e;
+    }
+
+    .refresh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      padding: 10px 20px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (max-width: 640px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .main { padding: 24px 0 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <a class="back-btn" href="/">← 메인으로</a>
+      <span class="page-title">사무소 리스트</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">Directory</div>
+        <h1 class="section-title">사무소 목록</h1>
+        <span class="count-badge" id="countBadge">불러오는 중...</span>
+      </div>
+
+      <div id="cardContainer">
+        <div class="loading">⏳ 데이터를 불러오는 중입니다...</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const SHEET_ID = "1OE8jCRvXbSOc80DXDCvVK85fbtyL3VQJ4o1JxbqIIno";
+    const GID = "1054349307";
+    const API_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+
+    async function loadData() {
+      const container = document.getElementById("cardContainer");
+      const countBadge = document.getElementById("countBadge");
+
+      try {
+        const res = await fetch(API_URL);
+        const text = await res.text();
+
+        // Google Sheets JSON 파싱
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        const rows = json.table.rows;
+
+        if (!rows || rows.length === 0) {
+          container.innerHTML = "<div class='error'>데이터가 없습니다.</div>";
+          return;
+        }
+
+        // 전체 데이터에서 랜덤 20개 선택
+        const shuffled = rows.sort(() => Math.random() - 0.5).slice(0, 20);
+
+        countBadge.textContent = `총 ${rows.length}개 중 20개 표시`;
+
+        container.innerHTML = `<div class="cards-grid">${shuffled.map(row => {
+          const c = row.c;
+          const num = c[0]?.v || "";
+          const office = c[1]?.v || "";
+          const member = c[2]?.v || "";
+          const phone = c[3]?.v || "";
+          const address = c[4]?.v || "";
+
+          return `
+            <div class="card">
+              <div class="card-number"># ${num}</div>
+              <div class="card-name">${office}</div>
+              <div class="card-member">${member}</div>
+              <hr class="card-divider">
+              <div class="card-info">
+                ${phone ? `<div class="card-info-item"><span class="card-info-icon">📞</span><span class="card-info-text">${phone}</span></div>` : ""}
+                ${address ? `<div class="card-info-item"><span class="card-info-icon">📍</span><span class="card-info-text">${address}</span></div>` : ""}
+              </div>
+            </div>
+          `;
+        }).join("")}</div>`;
+
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `
+          <div class="error">
+            <p>데이터를 불러올 수 없습니다.</p>
+            <button class="refresh-btn" onclick="loadData()">🔄 다시 시도</button>
+          </div>
+        `;
+        countBadge.textContent = "오류 발생";
+      }
+    }
+
+    loadData();
+  </script>
+
+</body>
+</html>
