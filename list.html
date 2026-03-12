@@ -232,9 +232,31 @@
   </main>
 
   <script>
-    const SHEET_ID = "1OE8jCRvXbSOc80DXDCvVK85fbtyL3VQJ4o1JxbqIIno";
-    const GID = "1054349307";
-    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+    // 데이터 소스 목록 — 새 자격자 추가 시 여기에만 추가하면 됨
+    const SOURCES = [
+      {
+        name: "노무사",
+        url: "https://docs.google.com/spreadsheets/d/1OE8jCRvXbSOc80DXDCvVK85fbtyL3VQJ4o1JxbqIIno/export?format=csv&gid=1054349307",
+        map: (c) => ({
+          type: "노무사",
+          office: c[1] || "",
+          member: c[2] || "",
+          phone: c[3] || "",
+          address: c[4] || ""
+        })
+      },
+      {
+        name: "세무사",
+        url: "https://docs.google.com/spreadsheets/d/18hrcKM1A_4gUlRwOAxsnzHbePnaz5_ycB9PegE8VxvA/export?format=csv&gid=331385308",
+        map: (c) => ({
+          type: "세무사",
+          office: c[1] || "",
+          member: c[3] || "",
+          phone: c[2] || "",
+          address: c[0] || ""
+        })
+      }
+    ];
 
     function parseCSV(text) {
       const lines = text.trim().split("\n");
@@ -258,44 +280,61 @@
       });
     }
 
+    const TYPE_COLOR = {
+      "노무사": "#2d6a4f",
+      "세무사": "#1d4ed8"
+    };
+
     async function loadData() {
       const container = document.getElementById("cardContainer");
       const countBadge = document.getElementById("countBadge");
 
       try {
-        const res = await fetch(CSV_URL);
-        const text = await res.text();
-        const rows = parseCSV(text).filter(r => r[0] && r[1]);
+        // 모든 소스 동시에 fetch
+        const results = await Promise.all(
+          SOURCES.map(async (source) => {
+            const res = await fetch(source.url);
+            const text = await res.text();
+            return parseCSV(text)
+              .filter(r => r[0] && r[1])
+              .map(source.map);
+          })
+        );
 
-        if (!rows || rows.length === 0) {
+        // 전체 합치기
+        const merged = results.flat();
+
+        if (merged.length === 0) {
           container.innerHTML = "<div class='error'>데이터가 없습니다.</div>";
           return;
         }
 
-        // 전체 데이터에서 랜덤 20개 선택
-        const shuffled = [...rows].sort(() => Math.random() - 0.5).slice(0, 20);
-        countBadge.textContent = `총 ${rows.length}개 중 20개 표시`;
+        // 랜덤 20개 선택
+        const shuffled = [...merged].sort(() => Math.random() - 0.5).slice(0, 20);
+        countBadge.textContent = `총 ${merged.length}개 중 20개 표시`;
 
-        container.innerHTML = `<div class="cards-grid">${shuffled.map(cols => {
-          const num = cols[0] || "";
-          const office = cols[1] || "";
-          const member = cols[2] || "";
-          const phone = cols[3] || "";
-          const address = cols[4] || "";
-
-          return `
-            <div class="card">
-              <div class="card-number"># ${num}</div>
-              <div class="card-name">${office}</div>
-              <div class="card-member">${member}</div>
-              <hr class="card-divider">
-              <div class="card-info">
-                ${phone ? `<div class="card-info-item"><span class="card-info-icon">📞</span><span class="card-info-text">${phone}</span></div>` : ""}
-                ${address ? `<div class="card-info-item"><span class="card-info-icon">📍</span><span class="card-info-text">${address}</span></div>` : ""}
-              </div>
+        container.innerHTML = `<div class="cards-grid">${shuffled.map(item => `
+          <div class="card">
+            <div style="margin-bottom:8px;">
+              <span style="
+                display:inline-block;
+                padding:3px 10px;
+                border-radius:999px;
+                font-size:12px;
+                font-weight:700;
+                color:white;
+                background:${TYPE_COLOR[item.type] || "#555"};
+              ">${item.type}</span>
             </div>
-          `;
-        }).join("")}</div>`;
+            <div class="card-name">${item.office}</div>
+            <div class="card-member">${item.member}</div>
+            <hr class="card-divider">
+            <div class="card-info">
+              ${item.phone ? `<div class="card-info-item"><span class="card-info-icon">📞</span><span class="card-info-text">${item.phone}</span></div>` : ""}
+              ${item.address ? `<div class="card-info-item"><span class="card-info-icon">📍</span><span class="card-info-text">${item.address}</span></div>` : ""}
+            </div>
+          </div>
+        `).join("")}</div>`;
 
       } catch (err) {
         console.error(err);
