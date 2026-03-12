@@ -329,6 +329,38 @@
         <div>
           <div class="badge">Professor · Lecturer · Speaker</div>
           <h1>김개구리 교수</h1>
+          <section id="contact-form">
+  <h2>강연 문의</h2>
+
+  <form id="lectureForm">
+    <input type="text" name="name" placeholder="이름" required />
+    <input type="email" name="email" placeholder="이메일" required />
+    <input type="text" name="organization" placeholder="기관/회사" />
+    <textarea name="message" placeholder="문의 내용"></textarea>
+
+    <button type="submit">문의 보내기</button>
+  </form>
+
+  <p id="result"></p>
+</section>
+
+<script>
+document.getElementById("lectureForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  const response = await fetch("/api/contact", {
+    method: "POST",
+    body: JSON.stringify(Object.fromEntries(formData)),
+    headers: { "Content-Type": "application/json" }
+  });
+
+  const result = await response.json();
+
+  document.getElementById("result").innerText = result.message;
+});
+</script>
           <p class="subhead">교육학 박사 · 대학 교수 · 전문 강연자</p>
           <p class="lead">
             배움이 실제 변화로 이어지도록, 이론과 현장을 연결하는 강의와 연구를 진행합니다.
