@@ -44,6 +44,34 @@
 
   <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- JSON-LD 구조화 데이터 -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "노무사·세무사 사무소 찾기",
+  "description": "전국 노무사, 세무사 사무소 목록을 확인하세요. 지역별 담당자 정보와 연락처를 제공합니다.",
+  "url": "https://minsl.com/list.html",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "김개구리 교수",
+    "url": "https://minsl.com"
+  },
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "노무사",
+      "description": "전국 노무사 사무소 목록"
+    },
+    {
+      "@type": "Thing",
+      "name": "세무사",
+      "description": "전국 세무사 사무소 목록"
+    }
+  ]
+}
+  </script>
   <style>
     :root {
       --bg: #f7f7f5;
