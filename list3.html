@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>등록손해사정사 조회 | minsl.com</title>
+  <meta name="description" content="FSS 및 KICAA 교차검증 완료 등록손해사정사 목록입니다." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://minsl.com/list3.html" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQLQFX3XG8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XQLQFX3XG8');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vuezgi9r19");
+  </script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #666;
+      --line: #e7e5e4;
+      --accent: #111827;
+      --accent-light: #374151;
+      --green: #059669;
+      --shadow: 0 4px 20px rgba(0,0,0,.06);
+      --radius: 12px;
+      --max: 1200px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      background: white;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .back-btn:hover { background: var(--bg); }
+
+    .page-title {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    /* ── Hero / Search ── */
+    .hero {
+      background: var(--accent);
+      color: white;
+      padding: 40px 0 36px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 6px;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,.6);
+      margin-bottom: 28px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 12px 16px;
+      font-size: 15px;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .search-box button {
+      padding: 10px 18px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: background .15s;
+    }
+    .search-box button:hover { background: #374151; }
+
+    .filter-select {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,.15);
+      color: white;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      min-width: 140px;
+    }
+    .filter-select option { color: var(--text); background: white; }
+
+    /* ── Main ── */
+    .main { padding: 32px 0 80px; }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .result-count {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .result-count strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      background: #ecfdf5;
+      color: var(--green);
+      border: 1px solid #a7f3d0;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ── Table ── */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .data-table thead tr {
+      background: #f9f9f8;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .data-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .04em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .data-table tbody tr {
+      border-bottom: 1px solid var(--line);
+      transition: background .1s;
+    }
+    .data-table tbody tr:last-child { border-bottom: none; }
+    .data-table tbody tr:hover { background: #fafaf9; }
+
+    .data-table td {
+      padding: 13px 16px;
+      vertical-align: middle;
+    }
+
+    .reg-no {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .name-cell {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .category-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      background: #eff6ff;
+      color: #2563eb;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .date-cell {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .org-cell {
+      font-size: 13px;
+      color: var(--text);
+      max-width: 200px;
+    }
+
+    .contact-cell {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── Pagination ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .page-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .page-btn:hover:not(:disabled) { background: var(--accent); color: white; border-color: var(--accent); }
+    .page-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .page-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+    /* ── Loading / Empty / Error ── */
+    .state-box {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--muted);
+    }
+    .state-box .icon { font-size: 40px; margin-bottom: 16px; }
+    .state-box p { font-size: 16px; }
+    .state-box.error p { color: #dc2626; }
+
+    .retry-btn {
+      margin-top: 16px;
+      padding: 10px 22px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* ── Mobile card fallback ── */
+    @media (max-width: 720px) {
+      .data-table thead { display: none; }
+      .data-table, .data-table tbody, .data-table tr, .data-table td {
+        display: block;
+        width: 100%;
+      }
+      .data-table tbody tr {
+        padding: 16px;
+        margin-bottom: 0;
+        position: relative;
+      }
+      .data-table td {
+        padding: 4px 0;
+      }
+      .data-table td::before {
+        content: attr(data-label);
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        letter-spacing: .05em;
+        min-width: 64px;
+        margin-right: 8px;
+      }
+      .col-org, .col-contact { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <a class="back-btn" href="/">← 메인으로</a>
+      <span class="page-title">등록손해사정사 조회</span>
+    </div>
+  </header>
+
+  <!-- Hero / Search -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-eyebrow">Verified Adjusters Directory</div>
+      <h1 class="hero-title">등록손해사정사 조회</h1>
+      <p class="hero-sub">FSS 금융감독원 × KICAA 교차검증 완료 데이터 · 3,952명</p>
+
+      <div class="search-row">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="이름 또는 등록번호 검색..."
+                 autocomplete="off" spellcheck="false" />
+          <button onclick="doSearch()">검색</button>
+        </div>
+        <select class="filter-select" id="categoryFilter" onchange="doSearch()">
+          <option value="">전체 종목</option>
+          <option value="1종">1종</option>
+          <option value="2종">2종</option>
+          <option value="3종">3종</option>
+          <option value="4종">4종</option>
+          <option value="1종(기존)">1종(기존)</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="container">
+
+      <div class="toolbar">
+        <div class="result-count" id="resultCount">불러오는 중...</div>
+        <div class="verified-badge">✔ FSS+KICAA 교차검증 완료</div>
+      </div>
+
+      <div class="table-wrap" id="tableWrap">
+        <div class="state-box">
+          <div class="icon">⏳</div>
+          <p>데이터를 불러오는 중입니다...</p>
+        </div>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+
+    </div>
+  </main>
+
+  <script>
+    const SUPABASE_URL = "https://loajiapmephhpzllswiv.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_v3-dho3JbY1iRomwvfomYg_hpovHnRj";
+    const PAGE_SIZE = 30;
+
+    let currentPage = 0;
+    let totalCount = 0;
+    let lastQuery = { search: "", category: "" };
+
+    // Enter key
+    document.getElementById("searchInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") doSearch();
+    });
+
+    function doSearch() {
+      currentPage = 0;
+      lastQuery = {
+        search: document.getElementById("searchInput").value.trim(),
+        category: document.getElementById("categoryFilter").value
+      };
+      fetchData();
+    }
+
+    function buildParams(search, category, page) {
+      const params = new URLSearchParams();
+      params.set("select", "*");
+      params.set("order", "name.asc");
+      params.set("limit", PAGE_SIZE);
+      params.set("offset", page * PAGE_SIZE);
+
+      if (search) {
+        // 숫자면 등록번호, 아니면 이름
+        if (/^\d/.test(search)) {
+          params.set("registration_no", `ilike.*${search}*`);
+        } else {
+          params.set("name", `ilike.*${search}*`);
+        }
+      }
+
+      if (category) {
+        params.set("category", `eq.${category}`);
+      }
+
+      return params.toString();
+    }
+
+    async function fetchData() {
+      const wrap = document.getElementById("tableWrap");
+      const countEl = document.getElementById("resultCount");
+      const paginationEl = document.getElementById("pagination");
+
+      wrap.innerHTML = `<div class="state-box"><div class="icon">⏳</div><p>불러오는 중...</p></div>`;
+      paginationEl.innerHTML = "";
+
+      const { search, category } = lastQuery;
+      const params = buildParams(search, category, currentPage);
+
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/verified_adjusters?${params}`,
+          {
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`,
+              "Prefer": "count=exact"
+            }
+          }
+        );
+
+        if (!res.ok) throw new Error(`API 오류 ${res.status}`);
+
+        // 전체 건수 파싱
+        const contentRange = res.headers.get("Content-Range") || "";
+        const match = contentRange.match(/\/(\d+)/);
+        if (match) totalCount = parseInt(match[1]);
+
+        const data = await res.json();
+
+        if (!data || data.length === 0) {
+          wrap.innerHTML = `<div class="state-box"><div class="icon">🔍</div><p>검색 결과가 없습니다.</p></div>`;
+          countEl.textContent = "0건";
+          return;
+        }
+
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+        const startNo = currentPage * PAGE_SIZE + 1;
+        countEl.innerHTML = `총 <strong>${totalCount.toLocaleString()}명</strong> 중 ${startNo}–${Math.min(startNo + data.length - 1, totalCount)}번째`;
+
+        // 테이블 렌더
+        wrap.innerHTML = `
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>등록번호</th>
+                <th>성명</th>
+                <th>종목</th>
+                <th>최초등록일</th>
+                <th class="col-org">소속</th>
+                <th class="col-contact">연락처</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map(row => `
+                <tr>
+                  <td class="reg-no" data-label="등록번호">${escHtml(row.registration_no || "")}</td>
+                  <td class="name-cell" data-label="성명">${escHtml(row.name || "")}</td>
+                  <td data-label="종목">
+                    ${row.category ? `<span class="category-tag">${escHtml(row.category)}</span>` : ""}
+                  </td>
+                  <td class="date-cell" data-label="등록일">${fmtDate(row.registration_date)}</td>
+                  <td class="org-cell col-org" data-label="소속">${escHtml(row.organization || "")}</td>
+                  <td class="contact-cell col-contact" data-label="연락처">${escHtml(row.phone || "")}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+
+        // 페이지네이션 렌더
+        renderPagination(totalPages);
+
+      } catch (err) {
+        console.error(err);
+        wrap.innerHTML = `
+          <div class="state-box error">
+            <div class="icon">⚠️</div>
+            <p>데이터를 불러올 수 없습니다.</p>
+            <button class="retry-btn" onclick="fetchData()">🔄 다시 시도</button>
+          </div>`;
+        countEl.textContent = "오류 발생";
+      }
+    }
+
+    function renderPagination(totalPages) {
+      if (totalPages <= 1) return;
+      const el = document.getElementById("pagination");
+      const maxBtns = 7;
+      let start = Math.max(0, currentPage - Math.floor(maxBtns / 2));
+      let end = Math.min(totalPages - 1, start + maxBtns - 1);
+      if (end - start < maxBtns - 1) start = Math.max(0, end - maxBtns + 1);
+
+      let html = `
+        <button class="page-btn" onclick="goPage(0)" ${currentPage === 0 ? "disabled" : ""}>«</button>
+        <button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 0 ? "disabled" : ""}>‹</button>
+      `;
+      for (let i = start; i <= end; i++) {
+        html += `<button class="page-btn ${i === currentPage ? "active" : ""}" onclick="goPage(${i})">${i + 1}</button>`;
+      }
+      html += `
+        <button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage >= totalPages - 1 ? "disabled" : ""}>›</button>
+        <button class="page-btn" onclick="goPage(${totalPages - 1})" ${currentPage >= totalPages - 1 ? "disabled" : ""}>»</button>
+      `;
+      el.innerHTML = html;
+    }
+
+    function goPage(p) {
+      currentPage = p;
+      fetchData();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function escHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function fmtDate(d) {
+      if (!d) return "";
+      return d.slice(0, 10);
+    }
+
+    // 초기 로드
+    fetchData();
+  </script>
+
+</body>
+</html>
