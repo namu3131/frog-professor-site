@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>컬럼 매핑 현황 | 관리자</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #666;
+      --line: #e7e5e4;
+      --accent: #111827;
+      --shadow: 0 10px 30px rgba(0,0,0,.06);
+      --radius: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      background: white;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .back-btn:hover { background: var(--bg); }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .header-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .main { padding: 40px 0 80px; }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #7a7a7a;
+      font-weight: 700;
+    }
+
+    .page-title {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin: 8px 0 0;
+    }
+
+    .page-desc {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .source-block {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .sheet-link {
+      font-size: 12px;
+      font-weight: 400;
+      margin-left: 8px;
+    }
+
+    .sheet-link a {
+      color: #888;
+      text-decoration: underline;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      background: #f4f4f4;
+    }
+
+    th {
+      padding: 14px 24px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .05em;
+      border-bottom: 1px solid var(--line);
+    }
+
+    td {
+      padding: 14px 24px;
+      font-size: 15px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafaf9; }
+
+    .field-name {
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .original-col {
+      color: #333;
+      font-size: 14px;
+    }
+
+    .original-col.muted {
+      color: #aaa;
+    }
+
+    .no-map {
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .unmapped-row td {
+      background: #fafaf9;
+    }
+
+    .updated-at {
+      margin-top: 24px;
+      text-align: right;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    @media (max-width: 640px) {
+      th, td { padding: 10px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <a class="back-btn" href="/">← 메인으로</a>
+      <span class="header-title">관리자 · 컬럼 매핑 현황</span>
+      <span class="header-sub">Admin / Map</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <div class="page-header">
+        <div class="eyebrow">Admin</div>
+        <h1 class="page-title">컬럼 매핑 현황</h1>
+        <p class="page-desc">각 자격자 시트의 원본 컬럼이 카드의 어떤 필드에 매핑되는지 정리한 문서입니다.</p>
+      </div>
+
+      <div class="source-block">
+        <table>
+          <thead>
+            <tr>
+              <th>카드 필드</th>
+              <th>
+                <span class="source-badge" style="background:#2d6a4f; vertical-align:middle; margin-right:8px;">노무사</span>
+                원본 헤더
+                <span class="sheet-link">
+                  <a href="https://docs.google.com/spreadsheets/d/1OE8jCRvXbSOc80DXDCvVK85fbtyL3VQJ4o1JxbqIIno/edit?gid=1054349307" target="_blank">시트 열기 ↗</a>
+                </span>
+              </th>
+              <th>
+                <span class="source-badge" style="background:#1d4ed8; vertical-align:middle; margin-right:8px;">세무사</span>
+                원본 헤더
+                <span class="sheet-link">
+                  <a href="https://docs.google.com/spreadsheets/d/18hrcKM1A_4gUlRwOAxsnzHbePnaz5_ycB9PegE8VxvA/edit?gid=331385308" target="_blank">시트 열기 ↗</a>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="field-name">이름 (member)</span></td>
+              <td><span class="original-col">회원명</span></td>
+              <td><span class="original-col">성명</span></td>
+            </tr>
+            <tr>
+              <td><span class="field-name">사무소명 (office)</span></td>
+              <td><span class="original-col">사무소명</span></td>
+              <td><span class="no-map">—</span></td>
+            </tr>
+            <tr>
+              <td><span class="field-name">전화 (phone)</span></td>
+              <td><span class="original-col">전화번호</span></td>
+              <td><span class="original-col">전화</span></td>
+            </tr>
+            <tr>
+              <td><span class="field-name">주소 (address)</span></td>
+              <td><span class="original-col">소재지</span></td>
+              <td><span class="original-col">지역</span></td>
+            </tr>
+            <tr class="unmapped-row">
+              <td><span class="no-map">매핑 없음</span></td>
+              <td><span class="original-col muted">번호</span></td>
+              <td><span class="no-map">—</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="updated-at">마지막 업데이트: 2026년 3월 13일</p>
+
+    </div>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>다른목록 | 김개구리 교수</title>
+  <meta name="description" content="다른목록 페이지입니다." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://minsl.com/list2.html" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQLQFX3XG8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XQLQFX3XG8');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vuezgi9r19");
+  </script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #666;
+      --line: #e7e5e4;
+      --accent: #111827;
+      --shadow: 0 10px 30px rgba(0,0,0,.06);
+      --radius: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      background: white;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .back-btn:hover { background: var(--bg); }
+
+    .page-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .main { padding: 40px 0 80px; }
+
+    .section-header {
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #7a7a7a;
+      font-weight: 700;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin: 8px 0 0;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 100px 0;
+      color: var(--muted);
+    }
+
+    .empty-state p {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .main { padding: 24px 0 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <a class="back-btn" href="/">← 메인으로</a>
+      <span class="page-title">다른목록</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">Directory</div>
+        <h1 class="section-title">다른목록</h1>
+      </div>
+
+      <div id="cardContainer">
+        <div class="empty-state">
+          <div class="icon">📋</div>
+          <p>준비 중입니다.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
