@@ -533,10 +533,8 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th>등록번호</th>
                 <th>성명</th>
                 <th>종목</th>
-                <th>최초등록일</th>
                 <th class="col-org">소속</th>
                 <th class="col-contact">연락처</th>
               </tr>
@@ -544,12 +542,10 @@
             <tbody>
               ${data.map(row => `
                 <tr>
-                  <td class="reg-no" data-label="등록번호">${escHtml(row.registration_no || "")}</td>
                   <td class="name-cell" data-label="성명">${escHtml(row.name || "")}</td>
                   <td data-label="종목">
                     ${row.category ? `<span class="category-tag">${escHtml(row.category)}</span>` : ""}
                   </td>
-                  <td class="date-cell" data-label="등록일">${fmtDate(row.registration_date)}</td>
                   <td class="org-cell col-org" data-label="소속">${escHtml(row.organization || "")}</td>
                   <td class="contact-cell col-contact" data-label="연락처">${escHtml(row.phone || "")}</td>
                 </tr>
