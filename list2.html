@@ -119,23 +119,88 @@
       margin: 8px 0 0;
     }
 
-    .empty-state {
-      text-align: center;
-      padding: 100px 0;
-      color: var(--muted);
+    .count-badge {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 12px;
+      background: var(--accent);
+      color: white;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
     }
 
-    .empty-state p {
-      margin: 0;
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.1);
+    }
+
+    .card-id {
+      font-size: 12px;
+      font-weight: 700;
+      color: #aaa;
+      font-family: monospace;
+      flex-shrink: 0;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 4px 8px;
+    }
+
+    .card-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 80px 0;
+      color: var(--muted);
       font-size: 16px;
     }
 
-    .empty-state .icon {
-      font-size: 48px;
-      margin-bottom: 16px;
+    .error {
+      text-align: center;
+      padding: 80px 0;
+      color: #e53e3e;
+    }
+
+    .refresh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      padding: 10px 20px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
     }
 
     @media (max-width: 640px) {
+      .cards-grid { grid-template-columns: 1fr; }
       .main { padding: 24px 0 60px; }
     }
   </style>
@@ -153,17 +218,68 @@
     <div class="container">
       <div class="section-header">
         <div class="eyebrow">Directory</div>
-        <h1 class="section-title">다른목록</h1>
+        <h1 class="section-title">학교 목록</h1>
+        <span class="count-badge" id="countBadge">불러오는 중...</span>
       </div>
 
       <div id="cardContainer">
-        <div class="empty-state">
-          <div class="icon">📋</div>
-          <p>준비 중입니다.</p>
-        </div>
+        <div class="loading">⏳ 데이터를 불러오는 중입니다...</div>
       </div>
     </div>
   </main>
+
+  <script>
+    const SUPABASE_URL = "https://loajiapmephhpzllswiv.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_v3-dho3JbY1iRomwvfomYg_hpovHnRj";
+
+    async function loadSchools() {
+      const container = document.getElementById("cardContainer");
+      const countBadge = document.getElementById("countBadge");
+
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/schools?select=*&order=id.asc`,
+          {
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+
+        if (!res.ok) throw new Error("API 오류");
+
+        const data = await res.json();
+
+        if (!data || data.length === 0) {
+          container.innerHTML = "<div class='error'>데이터가 없습니다.</div>";
+          countBadge.textContent = "0개";
+          return;
+        }
+
+        countBadge.textContent = `총 ${data.length}개`;
+
+        container.innerHTML = `<div class="cards-grid">${data.map(item => `
+          <div class="card">
+            <span class="card-id">${item.id}</span>
+            <span class="card-name">${item.name}</span>
+          </div>
+        `).join("")}</div>`;
+
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `
+          <div class="error">
+            <p>데이터를 불러올 수 없습니다.</p>
+            <button class="refresh-btn" onclick="loadSchools()">🔄 다시 시도</button>
+          </div>
+        `;
+        countBadge.textContent = "오류 발생";
+      }
+    }
+
+    loadSchools();
+  </script>
 
 </body>
 </html>
